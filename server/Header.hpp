@@ -1,0 +1,16 @@
+#ifndef STATIC_SERVER_HEADER_H
+#define STATIC_SERVER_HEADER_H
+
+#include <string>
+
+namespace server {
+	/**
+	 * The HTTP header.
+	 */
+	struct Header {
+		std::string name;
+		std::string value;
+	};
+}
+
+#endif //STATIC_SERVER_HEADER_H
