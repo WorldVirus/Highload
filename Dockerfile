@@ -1,18 +1,11 @@
-FROM fedora
+FROM ubuntu:16.04
 
-MAINTAINER Ivaschenko Veniamin
+RUN apt-get -y update
+RUN apt-get install -y python3
 
-RUN yum install -y gcc-c++
-RUN yum install -y boost-devel
-RUN yum install -y cmake
-RUN yum install -y make
-
-ADD . /app
-WORKDIR /app
-
-RUN cmake CMakeLists.txt
-RUN make
-
-CMD ./static_server 80 /static
+ADD ./prefork_server /prefork_server/
+ADD ./httptest /var/www/html/httptest/
 
 EXPOSE 80
+
+CMD python3 /prefork_server/httpd.py 
