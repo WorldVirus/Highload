@@ -13,7 +13,7 @@ def parser_args():
 
 def run():
     args = parser_args()
-    # Проверка root директории на существование
+    
     if (os.path.exists(args.root)):
         server = Server(args.root, args.ncpu)
         server.start()

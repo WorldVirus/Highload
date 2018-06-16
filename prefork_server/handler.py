@@ -22,17 +22,17 @@ class Handler:
 
     def make_response(self):
         response = Response(ResponseCode.NOT_FOUND)
-        real_path = os.path.normpath(self.root + self.request.path)       # нормализую путь
+        real_path = os.path.normpath(self.root + self.request.path)       
 
-        # проверка на выход из root
-        if (os.path.commonpath([real_path, self.root])) != self.root:     # commonpath - вернет общий путь
+        
+        if (os.path.commonpath([real_path, self.root])) != self.root:     
             return response
 
         if os.path.isfile(os.path.join(real_path, DEFAULT_PAGE)):
             real_path = os.path.join(real_path, DEFAULT_PAGE)
-        elif os.path.exists(real_path):                                         # директория||файл существует
+        elif os.path.exists(real_path):                                         
             response.code = ResponseCode.FORBIDDEN
-        else:                                                                   # директория||файл не существует
+        else:                                                                   
             return response
 
         try:
@@ -45,6 +45,6 @@ class Handler:
             response.code = ResponseCode.OK
             file.close()
         except IOError as e:
-            print("Error in path: " + real_path)                                       # 403 (см. http_const)
+            print("Error in path: " + real_path)                                       
 
         return response

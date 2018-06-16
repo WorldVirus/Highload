@@ -13,10 +13,10 @@ class Server:
 
     def start(self):
         print('Server start')
-        server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)         # создаю сокет
+        server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)         
         server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        server_socket.bind((config.HOST, config.PORT))                            # хост и порт
-        server_socket.listen(config.LISTENERS)                                    # слушать подключения (max подключений)
+        server_socket.bind((config.HOST, config.PORT))                            
+        server_socket.listen(config.LISTENERS)                                    
 
 
         for worker in range(self.ncpu):
@@ -26,10 +26,10 @@ class Server:
             else:
                 print('Run worker: {}'.format(os.getpid()))
                 while True:
-                    client_socket, client_address = server_socket.accept()        # принять соединение
-                    request = client_socket.recv(config.REQ_SIZE)                 # получить данные
+                    client_socket, client_address = server_socket.accept()        
+                    request = client_socket.recv(config.REQ_SIZE)                 
 
-                    # пустой запрос
+                    
                     if request.strip() == 0:
                         client_socket.close()
                         continue
@@ -42,6 +42,6 @@ class Server:
 
         server_socket.close()
 
-# нужно убить всех потомков при закрытии, а не только родителя
+
         for pid in self.workers:
             os.waitpid(pid, 0)
